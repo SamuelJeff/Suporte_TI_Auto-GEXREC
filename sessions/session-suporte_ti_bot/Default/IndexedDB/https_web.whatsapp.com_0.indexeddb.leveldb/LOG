@@ -1,13 +1,11 @@
-2024/10/04-11:28:48.728 1524 Reusing MANIFEST C:\Users\SAMUEL\Desktop\Suporte_TI_Auto-GEXREC\sessions\session-suporte_ti_bot\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
-2024/10/04-11:28:48.729 1524 Recovering log #80
-2024/10/04-11:28:48.936 1524 Reusing old log C:\Users\SAMUEL\Desktop\Suporte_TI_Auto-GEXREC\sessions\session-suporte_ti_bot\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000080.log 
-2024/10/04-11:28:59.831 1524 Level-0 table #86: started
-2024/10/04-11:28:59.869 1524 Level-0 table #86: 738425 bytes OK
-2024/10/04-11:28:59.874 1524 Delete type=0 #80
-2024/10/04-11:28:59.874 1524 Manual compaction at level-0 from '\x00%\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00&\x00\x00\x00' @ 0 : 0; will stop at (end)
-2024/10/04-11:29:02.365 3a14 Compacting 1@1 + 1@2 files
-2024/10/04-11:29:02.827 3a14 Generated table #87@1: 21283 keys, 757441 bytes
-2024/10/04-11:29:02.827 3a14 Compacted 1@1 + 1@2 files => 757441 bytes
-2024/10/04-11:29:02.828 3a14 compacted to: files[ 0 0 1 0 0 0 0 ]
-2024/10/04-11:29:02.828 3a14 Delete type=2 #83
-2024/10/04-11:29:02.828 3a14 Delete type=2 #86
+2024/10/22-15:29:44.473 900 Reusing MANIFEST C:\Users\SAMUEL\Desktop\Suporte_TI_Auto-GEXREC\sessions\session-suporte_ti_bot\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2024/10/22-15:29:44.473 900 Recovering log #215
+2024/10/22-15:29:44.545 900 Reusing old log C:\Users\SAMUEL\Desktop\Suporte_TI_Auto-GEXREC\sessions\session-suporte_ti_bot\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000215.log 
+2024/10/22-15:29:46.356 35e8 Level-0 table #221: started
+2024/10/22-15:29:46.373 35e8 Level-0 table #221: 452934 bytes OK
+2024/10/22-15:29:46.375 35e8 Delete type=0 #215
+2024/10/22-15:29:46.376 35e8 Manual compaction at level-0 from '\x00c\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00d\x00\x00\x00' @ 0 : 0; will stop at (end)
+2024/10/22-15:29:48.562 35e8 Compacting 1@1 + 1@2 files
+2024/10/22-15:29:48.755 35e8 Generated table #222@1: 62232 keys, 1933617 bytes
+2024/10/22-15:29:48.755 35e8 Compacted 1@1 + 1@2 files => 1933617 bytes
+2024/10/22-15:29:48.756 35e8 compacted to: files[ 0 0 1 0 0 0 0 ]
