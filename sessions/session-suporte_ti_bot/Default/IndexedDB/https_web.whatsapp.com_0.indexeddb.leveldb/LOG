@@ -1,11 +1,13 @@
-2024/10/22-15:29:44.473 900 Reusing MANIFEST C:\Users\SAMUEL\Desktop\Suporte_TI_Auto-GEXREC\sessions\session-suporte_ti_bot\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
-2024/10/22-15:29:44.473 900 Recovering log #215
-2024/10/22-15:29:44.545 900 Reusing old log C:\Users\SAMUEL\Desktop\Suporte_TI_Auto-GEXREC\sessions\session-suporte_ti_bot\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000215.log 
-2024/10/22-15:29:46.356 35e8 Level-0 table #221: started
-2024/10/22-15:29:46.373 35e8 Level-0 table #221: 452934 bytes OK
-2024/10/22-15:29:46.375 35e8 Delete type=0 #215
-2024/10/22-15:29:46.376 35e8 Manual compaction at level-0 from '\x00c\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00d\x00\x00\x00' @ 0 : 0; will stop at (end)
-2024/10/22-15:29:48.562 35e8 Compacting 1@1 + 1@2 files
-2024/10/22-15:29:48.755 35e8 Generated table #222@1: 62232 keys, 1933617 bytes
-2024/10/22-15:29:48.755 35e8 Compacted 1@1 + 1@2 files => 1933617 bytes
-2024/10/22-15:29:48.756 35e8 compacted to: files[ 0 0 1 0 0 0 0 ]
+2024/10/31-14:39:00.316 22a4 Reusing MANIFEST C:\Users\SAMUEL\Desktop\Suporte_TI_Auto-GEXREC\sessions\session-suporte_ti_bot\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2024/10/31-14:39:00.316 22a4 Recovering log #206
+2024/10/31-14:39:00.360 22a4 Reusing old log C:\Users\SAMUEL\Desktop\Suporte_TI_Auto-GEXREC\sessions\session-suporte_ti_bot\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000206.log 
+2024/10/31-14:39:02.362 2f10 Level-0 table #211: started
+2024/10/31-14:39:02.378 2f10 Level-0 table #211: 267565 bytes OK
+2024/10/31-14:39:02.381 2f10 Delete type=0 #206
+2024/10/31-14:39:02.382 2f10 Manual compaction at level-0 from '\x00U\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00V\x00\x00\x00' @ 0 : 0; will stop at (end)
+2024/10/31-14:39:02.451 2f10 Compacting 1@1 + 1@2 files
+2024/10/31-14:39:02.544 2f10 Generated table #212@1: 47108 keys, 1498492 bytes
+2024/10/31-14:39:02.544 2f10 Compacted 1@1 + 1@2 files => 1498492 bytes
+2024/10/31-14:39:02.545 2f10 compacted to: files[ 0 0 1 0 0 0 0 ]
+2024/10/31-14:39:02.546 2f10 Delete type=2 #208
+2024/10/31-14:39:02.546 2f10 Delete type=2 #211
