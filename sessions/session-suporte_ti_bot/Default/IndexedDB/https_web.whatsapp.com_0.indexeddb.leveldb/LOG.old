@@ -1,4 +1,0 @@
-2024/11/05-15:31:10.117 da8 Reusing MANIFEST C:\Users\SAMUEL\Desktop\Suporte_TI_Auto-GEXREC\sessions\session-suporte_ti_bot\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
-2024/11/05-15:31:10.118 da8 Recovering log #692
-2024/11/05-15:31:10.194 da8 Reusing old log C:\Users\SAMUEL\Desktop\Suporte_TI_Auto-GEXREC\sessions\session-suporte_ti_bot\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000692.log 
-2024/11/05-15:31:12.441 20bc Manual compaction at level-0 from ' !\x01\x00\x00\x00' @ 72057594037927935 : 1 .. ' "\x01\x00\x00\x00' @ 0 : 0; will stop at (end)
