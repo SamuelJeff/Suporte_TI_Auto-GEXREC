@@ -1,21 +1,21 @@
-// controllers/messageController.js
+const {saveMessage } = require('../models/message');
 
-var userSessions = {};
-var optionRegister = 0
+
+const userSessions = {};
 
 async function sendWelcomeMessage(client, from) {
-    const welcomeMessage = "Bem-vindo ao Suporte de TI!\n\n";
-    await client.sendMessage(from, welcomeMessage);
+    const welcomeQuestion = "Bem-vindo ao Suporte de TI!\n\n";
+    await client.sendMessage(from, welcomeQuestion);
 }
 
 async function askForName(client, from) {
-    const nameMessage = "Para começar, qual o seu nome?";
-    await client.sendMessage(from, nameMessage);
+    const nameQuestion = "Para começar, qual o seu nome?";
+    await client.sendMessage(from, nameQuestion);
 }
 
 async function askForAgency(client, from) {
-    const agencyMessage = "Por favor, informe a unidade/setor à qual você pertence.";
-    await client.sendMessage(from, agencyMessage);
+    const unitMessage = "Por favor, informe a unidade/setor à qual você pertence.";
+    await client.sendMessage(from, unitMessage);
 }
 
 async function sendWelcomeMenu(client, from) {
@@ -29,41 +29,52 @@ async function sendWelcomeMenu(client, from) {
     await client.sendMessage(from, welcomeMenu);
 }
 
+function formatNumber(number){
+    return number.replace(/@[a-z]\.us/, ""); 
+}
+
 async function handleOptionSelection(client, from, option) {
+    let responseMessage;
+
     switch (option) {
         case '1':
-            await client.sendMessage(from, "Você escolheu: Suporte. Por favor, descreva em detalhes o problema que você está enfrentando.");
+            responseMessage = "Você escolheu: Suporte. Por favor, descreva em detalhes o problema que você está enfrentando.";
             userSessions[from] = 'awaiting_detailed_description_support';
-            optionRegister = "Suporte"
             break;
         case '2':
-            await client.sendMessage(from, "Você escolheu: Troca de senha. Qual serviço necessita da troca de senha (ex: e-mail, sistema interno, etc)?");
+            responseMessage = "Você escolheu: Troca de senha. Qual serviço necessita da troca de senha (ex: e-mail, sistema interno, etc)?";
             userSessions[from] = 'awaiting_detailed_description_password';
-            optionRegister = "Troca de senha"
             break;
         case '3':
-            await client.sendMessage(from, "Você escolheu: Manutenção. Que tipo de manutenção é necessária (ex: hardware, software)?");
+            responseMessage = "Você escolheu: Manutenção. Que tipo de manutenção é necessária (ex: hardware, software)?";
             userSessions[from] = 'awaiting_maintenance_type';
-            optionRegister = "Manutenção"
             break;
         case '4':
-            await client.sendMessage(from, "Você escolheu: Instalação ou Atualização de Software. Por favor, informe o software a ser instalado ou atualizado.");
+            responseMessage = "Você escolheu: Instalação ou Atualização de Software. Por favor, informe o software a ser instalado ou atualizado.";
             userSessions[from] = 'awaiting_detailed_description_installation';
-            optionRegister = "Instalação ou Atualização de Software"
             break;
         default:
-            await client.sendMessage(from, "Opção inválida. Por favor, responda com o número correspondente.");
+            responseMessage = "Opção inválida. Por favor, responda com o número correspondente.";
             await sendWelcomeMenu(client, from);
             break;
+    }
+
+    if (responseMessage) {
+        await client.sendMessage(from, responseMessage);
     }
 }
 
 async function handleUserMessage(client, message) {
+    const called = {};
     const from = message.from;
     const userMessage = message.body.trim();
 
-    // Verifica o estado atual do usuário e realiza a ação correspondente
+     
     if (!userSessions[from]) {
+
+        called.number = formatNumber(from)
+        called.first = userMessage; // Armazena a primeira mensagem do usuário
+
         userSessions[from] = 'awaiting_name';
         await sendWelcomeMessage(client, from);
         await askForName(client, from);
@@ -72,28 +83,34 @@ async function handleUserMessage(client, message) {
 
         if (currentState === 'awaiting_name') {
             await client.sendMessage(from, `Prazer em conhecê-lo, ${userMessage}!`);
+            called.name = userMessage; // Armazena a mensagem de solicitação de nome
             userSessions[from] = 'awaiting_agency';
             await askForAgency(client, from);
-        } else if (currentState === 'awaiting_agency') {
+        } 
+        else if (currentState === 'awaiting_agency') {
             await client.sendMessage(from, `Agência registrada: ${userMessage}.`);
+            called.unit = userMessage; // Armazena a mensagem de solicitação de agência
             userSessions[from] = 'awaiting_selection';
             await sendWelcomeMenu(client, from);
-        } else if (currentState === 'awaiting_selection') {
+        }
+         else if (currentState === 'awaiting_selection') {
             await handleOptionSelection(client, from, userMessage);
-        } else if (currentState === 'awaiting_maintenance_type') {
-            await client.sendMessage(from, "Por favor, descreva em uma mensagem qual o problema a ser solucionado.");
-            userSessions[from] = 'awaiting_detailed_description_maintenance';
-
-        } else if (currentState.startsWith('awaiting_detailed_description')) {
-            await client.sendMessage(from, `Chamado registrado: "${optionRegister}". Nossa equipe entrará em contato em breve.`);
-            delete userSessions[from]; // Reseta o estado do usuário após o chamado ser registrado
+            called.type = userMessage; // Armazena a mensagem de do menu de opções
+        }
+         else if (currentState === 'awaiting_maintenance_type') {
+            called.option = userMessage
+            await client.sendMessage(from, "Obrigado. Por favor, descreva o problema detalhadamente(Descreve uma única mensagem).");
+            userSessions[from] = 'awaiting_detailed_description';
+        }
+         else if (currentState.startsWith('awaiting_detailed_description')) {
+            called.detail = userMessage;
+            saveMessage(called)
+            await client.sendMessage(from, `Chamado registrado: "${userMessage}". Nossa equipe entrará em contato em breve.`);
+            delete userSessions[from];
         }
     }
 }
 
-async function Savemessage(params) {
-    
-}
 
 module.exports = {
     handleUserMessage

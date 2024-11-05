@@ -26,9 +26,8 @@ client.on('ready', () => {
 });
 
 client.on('message', (message) => {handleUserMessage(client, message)
-    console.log(message.body)
+ console.log(message.body)
 });
-
 
 
 client.initialize();
