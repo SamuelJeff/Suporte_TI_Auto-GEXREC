@@ -1,6 +1,5 @@
 const connectDB = require('../db/db');
 
-// Função para salvar a sessão no banco de dados
 const saveSession = (id, session) => {
     const db = connectDB();
     db.run(`REPLACE INTO sessions (id, session) VALUES (?, ?)`, [id, session], (err) => {
@@ -13,7 +12,7 @@ const saveSession = (id, session) => {
     db.close();
 };
 
-// Função para carregar a sessão do banco de dados
+
 const loadSession = (id, callback) => {
     const db = connectDB();
     db.get(`SELECT session FROM sessions WHERE id = ?`, [id], (err, row) => {
@@ -25,7 +24,6 @@ const loadSession = (id, callback) => {
     db.close();
 };
 
-// Função para excluir a sessão do banco de dados
 const deleteSession = (id) => {
     const db = connectDB();
     db.run(`DELETE FROM sessions WHERE id = ?`, [id], (err) => {

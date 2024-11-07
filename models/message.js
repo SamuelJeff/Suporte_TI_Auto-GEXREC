@@ -1,6 +1,6 @@
 const knex = require('knex')(require('../knexfile').development);
 
-// Função para salvar uma mensagem
+
 async function saveMessage(called) {
   return await knex('messages').insert({
     number: called.number,
@@ -13,7 +13,7 @@ async function saveMessage(called) {
   });
 }
 
-// Função para buscar mensagens por usuário
+
 async function getMessagesByUser(number) {
   return await knex('messages').where({ number }).select('*');
 }

@@ -3,7 +3,7 @@
  * @returns { Promise<void> }
  */
 exports.up = function(knex) {
-  
+
 };
 
 /**
@@ -14,7 +14,6 @@ exports.down = function(knex) {
   
 };
 
-// db/migrations/xxxx_create_messages_table.js
 exports.up = function(knex) {
     return knex.schema.createTable('messages', (table) => {
       table.increments('id').primary();

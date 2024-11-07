@@ -71,13 +71,11 @@ async function handleUserMessage(client, message) {
     const userMessage = message.body.trim();
     const number = formatNumber(from);
     
-    // Inicializa o objeto `called` com o número do usuário
     const called = userSessions[from]?.called || { number };
     
     if (!userSessions[from]) {
-        // Cria a sessão e salva a primeira mensagem
         userSessions[from] = { step: 'awaiting_name', called };
-        called.first = userMessage; // Armazena a primeira mensagem do usuário
+        called.first = userMessage;
 
         await sendWelcomeMessage(client, from);
         await askForName(client, from);
@@ -111,9 +109,9 @@ async function handleUserMessage(client, message) {
 
             case 'awaiting_detailed_description':
                 session.called.detail = userMessage;
-                await saveMessage(session.called); // Salva o objeto 'called' completo no banco
+                await saveMessage(session.called); 
                 await client.sendMessage(from, `Chamado registrado: "${optionRegister}". Nossa equipe entrará em contato em breve.`);
-                delete userSessions[from]; // Limpa a sessão após finalizar o processo
+                delete userSessions[from]; 
                 break;
 
             default:
@@ -125,3 +123,4 @@ async function handleUserMessage(client, message) {
 module.exports = {
     handleUserMessage
 };
+
