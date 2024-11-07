@@ -1,8 +1,6 @@
-const {saveMessage } = require('../models/message');
-
-
+const { saveMessage } = require('../models/message');
 const userSessions = {};
-
+var optionRegister = 0
 async function sendWelcomeMessage(client, from) {
     const welcomeQuestion = "Bem-vindo ao Suporte de TI!\n\n";
     await client.sendMessage(from, welcomeQuestion);
@@ -29,29 +27,33 @@ async function sendWelcomeMenu(client, from) {
     await client.sendMessage(from, welcomeMenu);
 }
 
-function formatNumber(number){
+function formatNumber(number) {
     return number.replace(/@[a-z]\.us/, ""); 
 }
 
-async function handleOptionSelection(client, from, option) {
+async function handleOptionSelection(client, from, option, session) {
     let responseMessage;
 
     switch (option) {
         case '1':
             responseMessage = "Você escolheu: Suporte. Por favor, descreva em detalhes o problema que você está enfrentando.";
-            userSessions[from] = 'awaiting_detailed_description_support';
+            session.step = 'awaiting_type';
+            optionRegister = "Suporte"
             break;
         case '2':
             responseMessage = "Você escolheu: Troca de senha. Qual serviço necessita da troca de senha (ex: e-mail, sistema interno, etc)?";
-            userSessions[from] = 'awaiting_detailed_description_password';
+            session.step = 'awaiting_type';
+            optionRegister = "Troca de senha"
             break;
         case '3':
             responseMessage = "Você escolheu: Manutenção. Que tipo de manutenção é necessária (ex: hardware, software)?";
-            userSessions[from] = 'awaiting_maintenance_type';
+            session.step = 'awaiting_type';
+            optionRegister = "Manutenção"
             break;
         case '4':
             responseMessage = "Você escolheu: Instalação ou Atualização de Software. Por favor, informe o software a ser instalado ou atualizado.";
-            userSessions[from] = 'awaiting_detailed_description_installation';
+            session.step = 'awaiting_type';
+            optionRegister = "Instalação ou Atualização de Software"
             break;
         default:
             responseMessage = "Opção inválida. Por favor, responda com o número correspondente.";
@@ -65,52 +67,60 @@ async function handleOptionSelection(client, from, option) {
 }
 
 async function handleUserMessage(client, message) {
-    const called = {};
     const from = message.from;
     const userMessage = message.body.trim();
-
-     
+    const number = formatNumber(from);
+    
+    // Inicializa o objeto `called` com o número do usuário
+    const called = userSessions[from]?.called || { number };
+    
     if (!userSessions[from]) {
-
-        called.number = formatNumber(from)
+        // Cria a sessão e salva a primeira mensagem
+        userSessions[from] = { step: 'awaiting_name', called };
         called.first = userMessage; // Armazena a primeira mensagem do usuário
 
-        userSessions[from] = 'awaiting_name';
         await sendWelcomeMessage(client, from);
         await askForName(client, from);
     } else {
-        const currentState = userSessions[from];
+        const session = userSessions[from];
+        switch (session.step) {
+            case 'awaiting_name':
+                session.called.name = userMessage;
+                session.step = 'awaiting_agency';
+                await client.sendMessage(from, `Prazer em conhecê-lo, ${userMessage}!`);
+                await askForAgency(client, from);
+                break;
 
-        if (currentState === 'awaiting_name') {
-            await client.sendMessage(from, `Prazer em conhecê-lo, ${userMessage}!`);
-            called.name = userMessage; // Armazena a mensagem de solicitação de nome
-            userSessions[from] = 'awaiting_agency';
-            await askForAgency(client, from);
-        } 
-        else if (currentState === 'awaiting_agency') {
-            await client.sendMessage(from, `Agência registrada: ${userMessage}.`);
-            called.unit = userMessage; // Armazena a mensagem de solicitação de agência
-            userSessions[from] = 'awaiting_selection';
-            await sendWelcomeMenu(client, from);
-        }
-         else if (currentState === 'awaiting_selection') {
-            await handleOptionSelection(client, from, userMessage);
-            called.type = userMessage; // Armazena a mensagem de do menu de opções
-        }
-         else if (currentState === 'awaiting_maintenance_type') {
-            called.option = userMessage
-            await client.sendMessage(from, "Obrigado. Por favor, descreva o problema detalhadamente(Descreve uma única mensagem).");
-            userSessions[from] = 'awaiting_detailed_description';
-        }
-         else if (currentState.startsWith('awaiting_detailed_description')) {
-            called.detail = userMessage;
-            saveMessage(called)
-            await client.sendMessage(from, `Chamado registrado: "${userMessage}". Nossa equipe entrará em contato em breve.`);
-            delete userSessions[from];
+            case 'awaiting_agency':
+                session.called.unit = userMessage;
+                session.step = 'awaiting_selection';
+                await client.sendMessage(from, `Unidade registrada: ${userMessage}.`);
+                await sendWelcomeMenu(client, from);
+                break;
+
+            case 'awaiting_selection':
+                session.called.type = userMessage;
+                await handleOptionSelection(client, from, userMessage, session);
+                break;
+
+            case 'awaiting_type':
+                session.called.option = userMessage;
+                session.step = 'awaiting_detailed_description';
+                await client.sendMessage(from, "Obrigado. Por favor, descreva o problema detalhadamente.");
+                break;
+
+            case 'awaiting_detailed_description':
+                session.called.detail = userMessage;
+                await saveMessage(session.called); // Salva o objeto 'called' completo no banco
+                await client.sendMessage(from, `Chamado registrado: "${optionRegister}". Nossa equipe entrará em contato em breve.`);
+                delete userSessions[from]; // Limpa a sessão após finalizar o processo
+                break;
+
+            default:
+                break;
         }
     }
 }
-
 
 module.exports = {
     handleUserMessage

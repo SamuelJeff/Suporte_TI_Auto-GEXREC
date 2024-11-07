@@ -25,9 +25,14 @@ client.on('ready', () => {
     console.log('Cliente pronto!');
 });
 
-client.on('message', (message) => {handleUserMessage(client, message)
- console.log(message.body)
+// Função assíncrona para manipular mensagens
+client.on('message', async (message) => {
+    try {
+        await handleUserMessage(client, message);
+        console.log(message.body);
+    } catch (error) {
+        console.error("Erro ao processar a mensagem:", error);
+    }
 });
-
 
 client.initialize();
