@@ -4,7 +4,9 @@ const qrcode = require('qrcode-terminal');
 const { handleSaveSession, handleLoadSession, handleDeleteSession } = require('./controllers/sessionController');
 const { handleUserMessage } = require('./controllers/messageController');
 
-const client = new Client({
+async function startBot(){
+
+    const client = new Client({
     authStrategy: new LocalAuth({
         clientId: "suporte_ti_bot",
         dataPath: './sessions',
@@ -36,3 +38,8 @@ client.on('message', async (message) => {
 });
 
 client.initialize();
+}
+
+module.exports ={
+    startBot
+};

@@ -97,7 +97,7 @@ async function handleUserMessage(client, message) {
                 break;
 
             case 'awaiting_selection':
-                session.called.type = userMessage;
+                session.called.type = optionRegister;
                 await handleOptionSelection(client, from, userMessage, session);
                 break;
 

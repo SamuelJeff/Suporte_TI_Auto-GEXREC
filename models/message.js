@@ -13,6 +13,9 @@ async function saveMessage(called) {
   });
 }
 
+async function getAllMessages() {
+  return await knex('messages').select('*');
+}
 
 async function getMessagesByUser(number) {
   return await knex('messages').where({ number }).select('*');
@@ -20,5 +23,6 @@ async function getMessagesByUser(number) {
 
 module.exports = {
   saveMessage,
-  getMessagesByUser
+  getMessagesByUser,
+  getAllMessages
 };
