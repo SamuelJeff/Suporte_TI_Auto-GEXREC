@@ -1,19 +1,39 @@
 const { saveMessage } = require('../models/message');
 const userSessions = {};
 var optionRegister = 0
+
+
 async function sendWelcomeMessage(client, from) {
     const welcomeQuestion = "Bem-vindo ao Suporte de TI!\n\n";
-    await client.sendMessage(from, welcomeQuestion);
+    return await client.sendMessage(from, welcomeQuestion)
+        .then(() => {
+            console.log("Mensagem de boas-vindas enviada com sucesso.");
+        })
+        .catch((error) => {
+            console.error("Erro ao enviar mensagem de boas-vindas:", error);
+        });
 }
 
 async function askForName(client, from) {
     const nameQuestion = "Para começar, qual o seu nome?";
-    await client.sendMessage(from, nameQuestion);
+    return await client.sendMessage(from, nameQuestion)
+        .then(() => {
+            console.log("Pergunta sobre nome enviada com sucesso.");
+        })
+        .catch((error) => {
+            console.error("Erro ao enviar pergunta sobre nome:", error);
+        });
 }
 
 async function askForAgency(client, from) {
     const unitMessage = "Por favor, informe a unidade/setor à qual você pertence.";
-    await client.sendMessage(from, unitMessage);
+    return await client.sendMessage(from, unitMessage)
+        .then(() => {
+            console.log("Pergunta sobre unidade/setor enviada com sucesso.");
+        })
+        .catch((error) => {
+            console.error("Erro ao enviar pergunta sobre unidade/setor:", error);
+        });
 }
 
 async function sendWelcomeMenu(client, from) {
@@ -24,7 +44,13 @@ async function sendWelcomeMenu(client, from) {
         "3️⃣ Manutenção\n" +
         "4️⃣ Instalação ou Atualização de Software\n\n" +
         "Por favor, responda com o número da opção desejada.";
-    await client.sendMessage(from, welcomeMenu);
+    return await client.sendMessage(from, welcomeMenu)
+        .then(() => {
+            console.log("Menu de boas-vindas enviado com sucesso.");
+        })
+        .catch((error) => {
+            console.error("Erro ao enviar menu de boas-vindas:", error);
+        });
 }
 
 function formatNumber(number) {
@@ -97,11 +123,11 @@ async function handleUserMessage(client, message) {
                 break;
 
             case 'awaiting_selection':
-                session.called.type = optionRegister;
                 await handleOptionSelection(client, from, userMessage, session);
                 break;
 
             case 'awaiting_type':
+                session.called.type = optionRegister;
                 session.called.option = userMessage;
                 session.step = 'awaiting_detailed_description';
                 await client.sendMessage(from, "Obrigado. Por favor, descreva o problema detalhadamente.");

@@ -18,11 +18,16 @@ async function getAllMessages() {
 }
 
 async function getMessagesByUser(number) {
-  return await knex('messages').where({ number }).select('*');
+  return await knex('messages').where({ number: number }).select('*');
+}
+
+async function getMessagesByType(type) {
+  return await knex('messages').where({ typeMessage: type }).select('*');
 }
 
 module.exports = {
   saveMessage,
   getMessagesByUser,
-  getAllMessages
+  getAllMessages,
+  getMessagesByType
 };
