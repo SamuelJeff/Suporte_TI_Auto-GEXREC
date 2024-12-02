@@ -7,7 +7,6 @@ async function sendWelcomeMessage(client, from) {
     const welcomeQuestion = "Bem-vindo ao Suporte de TI!\n\n";
     return await client.sendMessage(from, welcomeQuestion)
         .then(() => {
-            console.log("Mensagem de boas-vindas enviada com sucesso.");
         })
         .catch((error) => {
             console.error("Erro ao enviar mensagem de boas-vindas:", error);
@@ -18,7 +17,6 @@ async function askForName(client, from) {
     const nameQuestion = "Para começar, qual o seu nome?";
     return await client.sendMessage(from, nameQuestion)
         .then(() => {
-            console.log("Pergunta sobre nome enviada com sucesso.");
         })
         .catch((error) => {
             console.error("Erro ao enviar pergunta sobre nome:", error);
@@ -29,7 +27,6 @@ async function askForAgency(client, from) {
     const unitMessage = "Por favor, informe a unidade/setor à qual você pertence.";
     return await client.sendMessage(from, unitMessage)
         .then(() => {
-            console.log("Pergunta sobre unidade/setor enviada com sucesso.");
         })
         .catch((error) => {
             console.error("Erro ao enviar pergunta sobre unidade/setor:", error);
@@ -46,7 +43,7 @@ async function sendWelcomeMenu(client, from) {
         "Por favor, responda com o número da opção desejada.";
     return await client.sendMessage(from, welcomeMenu)
         .then(() => {
-            console.log("Menu de boas-vindas enviado com sucesso.");
+            
         })
         .catch((error) => {
             console.error("Erro ao enviar menu de boas-vindas:", error);
@@ -135,6 +132,7 @@ async function handleUserMessage(client, message) {
 
             case 'awaiting_detailed_description':
                 session.called.detail = userMessage;
+                session.called.situation = 'open';
                 await saveMessage(session.called); 
                 await client.sendMessage(from, `Chamado registrado: "${optionRegister}". Nossa equipe entrará em contato em breve.`);
                 delete userSessions[from]; 

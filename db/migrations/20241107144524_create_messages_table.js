@@ -25,10 +25,9 @@ exports.up = function(knex) {
       table.text('optionMessage');
       table.text('detailMessage');
       table.timestamp('timestamp').defaultTo(knex.fn.now());
+      table.enu('situation', ['solved', 'open']).defaultTo('open');
     });
   };
-  
-  exports.down = function(knex) {
-    return knex.schema.dropTableIfExists('messages');
-  };
+
+
   
