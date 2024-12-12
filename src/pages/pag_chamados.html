@@ -7,9 +7,44 @@
     <link rel="stylesheet" href="../css/pag_chamados/style.css">
 </head>
 <body>
-    
-    <iframe src="" frameborder="0"></iframe>
-    <button onclick=""
+    <header>
+        <div>
+            <a href="#">Início</a>
+            <a href="#">Chamados Abertos</a>
+            <a href="#">Chamados Encerrados</a>
+        </div>
+        <div>
+            <a href="#">Chat</a>
+            <a href="#">Sair</a>
+        </div>
+    </header>
+    <div class="container">
+        <div class="search-bar">
+            <input type="text" id="search" placeholder="Procurar...">
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nº</th>
+                    <th>Nome do Solicitante</th>
+                    <th>Setor/Unidade</th>
+                    <th>Categoria</th>
+                    <th>Descrição</th>
+                    <th>Data da Criação</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody id="table-body">
+            </tbody>
+        </table>
+        <div class="pagination">
+            <a href="#">1</a>
+            <a href="#">2</a>
+            <a href="#">3</a>
+            <span>...</span>
+            <a href="#">10</a>
+        </div>
+    </div>
     <script src="../js/pag_chamados/script.js"></script>
 </body>
 </html>
