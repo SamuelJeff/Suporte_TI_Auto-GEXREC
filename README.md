@@ -1,1 +1,0 @@
-# Suporte_TI_Auto-GEXREC
