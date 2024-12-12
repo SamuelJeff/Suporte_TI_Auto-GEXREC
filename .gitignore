@@ -1,0 +1,5 @@
+node_modules/**/*
+jspm_packages/**/*
+.wwebjs_cache/**/*
+sessions/session-suporte_ti_bot/**/*
+db/message/**/*
