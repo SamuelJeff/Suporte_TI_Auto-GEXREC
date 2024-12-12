@@ -1,12 +1,12 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: Gidugu;
     margin: 0;
     padding: 0;
     background-color: #f4f4f4;
 }
 
 header {
-    background-color: #5DADE2;
+    background-color: #71AFE5;
     padding: 10px;
     color: white;
     display: flex;
@@ -14,14 +14,26 @@ header {
     align-items: center;
 }
 
-header a {
-    color: white;
-    text-decoration: none;
-    margin: 0 10px;
+.menu-item {
+    text-align: center;
 }
 
-header a:hover {
-    text-decoration: underline;
+.menu-item a {
+    color: white;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.menu-item img {
+    width: 32px;
+    height: 32px;
+    margin-bottom: 5px;
+}
+
+.menu-item span {
+    font-size: 20px;
 }
 
 .container {
@@ -59,7 +71,7 @@ th {
 }
 
 .pagination a:hover {
-    background-color: #5DADE2;
+    background-color: #71AFE5;
     color: white;
 }
 
