@@ -3,7 +3,7 @@
  * @returns { Promise<void> }
  */
 exports.up = function(knex) {
-
+  
 };
 
 /**
@@ -28,6 +28,3 @@ exports.up = function(knex) {
       table.text('situation').defaultTo('open');
     });
   };
-
-
-  
