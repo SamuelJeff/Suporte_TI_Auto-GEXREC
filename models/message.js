@@ -32,11 +32,14 @@ async function getMessagesByDay() {
   return await knex("messages").whereRaw('DATE(timestamp) = ?', [dateOnly]).select("*");
 }
 
-async function updateMessageSituation(id, situation) {
-  return await knex('messages')
-      .where({ id })
-      .update({ situation });
+async function updateMessageSituation(id) {
+  return await knex('messages').where({ id: id }).update({ situation: 'solved' })
 }
+
+async function deleteMessageById(id){
+  return await knex('messages').where({ id: id }).del()
+}
+
 
 module.exports = {
   saveMessage,
@@ -44,5 +47,6 @@ module.exports = {
   getAllMessages,
   getMessagesByType,
   getMessagesByDay,
-  updateMessageSituation
+  updateMessageSituation,
+  deleteMessageById
 };
