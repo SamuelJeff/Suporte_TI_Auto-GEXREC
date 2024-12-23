@@ -18,8 +18,9 @@ app.use(express.json());
 startBot();
 
 app.get("/", (req, res) => {
-  res.send(`hello world!`);
+  res.send(`!`);
 });
+
 //endpoint para filtrar por números
 app.get('/messages/numero/:number', async (req, res) => {
   const { number } = req.params;
@@ -35,7 +36,8 @@ app.get('/messages/numero/:number', async (req, res) => {
       res.status(500).json({ error: 'Erro ao buscar mensagens' });
   }
 });
-//endpoint para enviar todos as mensagens
+
+//endpoint para enviar todos os chamados
 app.get('/messages', async (req, res) => {
   try {
       const messages = await getAllMessages();
@@ -45,7 +47,8 @@ app.get('/messages', async (req, res) => {
       res.status(500).json({ error: 'Erro ao buscar todas as mensagens' });
   }
 });
-//endpoint para filtrar por tipo
+
+//endpoint para filtrar chamados por tipo
 app.get('/messages/tipo/:type', async (req, res) => {
   const { type } = req.params; 
   console.log("Tipo recebido:", type); 
@@ -61,7 +64,8 @@ app.get('/messages/tipo/:type', async (req, res) => {
       res.status(500).json({ error: 'Erro ao buscar mensagens' });
   }
 });
-//endpoint para filtrar os chamdos do dia atual
+
+//endpoint para filtrar os chamados do dia atual
 app.get('/messages/hoje', async (req,res) =>{
 try{
   const messages = await getMessagesByDay()
@@ -71,9 +75,10 @@ try{
   res.status(500).json({ error: 'Erro ao buscar mensagens' });
 }
 });
-//endpoint para atualizar a situação de uma mensagem
+
+//endpoint para atualizar a situação de uma chamados
 app.put('/situation', async (req, res) => {
-  const { id } = req.query; // Aqui usa req.query para parâmetros de query
+  const { id } = req.query;
  
   if (!id) {
     return res.status(400).json({ error: 'O parâmetro "id" é obrigatório.' });
@@ -86,6 +91,7 @@ app.put('/situation', async (req, res) => {
     res.status(500).json({ error: 'Erro ao atualizar a situação.' });
   }
 });
+
 //endpoint para deletar o chamado
 app.delete('/messages/delete/:id', async (req, res) => {
   const { id } = req.params;
